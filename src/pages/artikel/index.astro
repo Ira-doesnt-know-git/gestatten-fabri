@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import ArticleGrid from "../../components/ArticleGrid.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { byNewest } from "../../lib/articles";
+
+const articles = (await getCollection("articles", ({ data }) => !data.draft)).sort(byNewest);
+---
+
+<BaseLayout title="Beiträge" description="Artikel über Film, Serie, Storytelling und Medien.">
+  <main id="main-content" class="index-page shell">
+    <h1>Beiträge</h1>
+    <ArticleGrid articles={articles} variant="index" />
+  </main>
+</BaseLayout>
+
+<style>
+  .index-page {
+    padding: 112px 0 128px;
+  }
+
+  .index-page h1 {
+    margin: 0 0 72px;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 599px) {
+    .index-page {
+      padding: 64px 0 80px;
+    }
+
+    .index-page h1 {
+      margin-bottom: 40px;
+      font-size: 32.4591px;
+      line-height: 38.9509px;
+    }
+  }
+</style>

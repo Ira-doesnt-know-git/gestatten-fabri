@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import ArticleGrid from "../../components/ArticleGrid.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { byNewest, slugify, type Article } from "../../lib/articles";
+
+export async function getStaticPaths() {
+  const articles = (await getCollection("articles", ({ data }) => !data.draft)).sort(byNewest);
+  const tags = new Map<string, { label: string; articles: Article[] }>();
+
+  for (const article of articles) {
+    for (const tag of article.data.tags) {
+      const slug = slugify(tag);
+      const value = tags.get(slug) ?? { label: tag, articles: [] };
+      value.articles.push(article);
+      tags.set(slug, value);
+    }
+  }
+
+  return [...tags.entries()].map(([tag, value]) => ({
+    params: { tag },
+    props: value,
+  }));
+}
+
+interface Props {
+  label: string;
+  articles: Article[];
+}
+
+const { label, articles } = Astro.props;
+---
+
+<BaseLayout title={label} description={`Artikel mit dem Schlagwort ${label}.`}>
+  <main id="main-content" class="tag-page shell">
+    <h1>{label}</h1>
+    <ArticleGrid articles={articles} variant="index" />
+  </main>
+</BaseLayout>
+
+<style>
+  .tag-page {
+    padding: 112px 0 128px;
+  }
+
+  .tag-page h1 {
+    margin: 0 0 72px;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 599px) {
+    .tag-page {
+      padding: 64px 0 80px;
+    }
+
+    .tag-page h1 {
+      margin-bottom: 40px;
+      font-size: 32.4591px;
+      line-height: 38.9509px;
+    }
+  }
+</style>

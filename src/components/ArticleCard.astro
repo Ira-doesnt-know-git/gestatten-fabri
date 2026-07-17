@@ -1,0 +1,95 @@
+---
+import type { Article } from "../lib/articles";
+import { formatDate } from "../lib/articles";
+
+interface Props {
+  article: Article;
+  variant?: "home" | "index";
+}
+
+const { article, variant = "home" } = Astro.props;
+const href = `/${article.data.slug}/`;
+---
+
+<article class:list={["article-card", variant]}>
+  <h2><a href={href}>{article.data.title}</a></h2>
+  {variant === "home" && (
+    <a class="article-date" href={href}>
+      <time datetime={article.data.publishedAt.toISOString()}>{formatDate(article.data.publishedAt)}</time>
+    </a>
+  )}
+  <p>{article.data.description}</p>
+  {variant === "index" && (
+    <a class="article-date index-date" href={href}>
+      <time datetime={article.data.publishedAt.toISOString()}>{formatDate(article.data.publishedAt)}</time>
+    </a>
+  )}
+</article>
+
+<style>
+  .article-card h2 {
+    margin: 20px 0;
+    font-size: 30px;
+    font-weight: 250;
+    line-height: 1.4;
+  }
+
+  .article-card h2 a,
+  .article-date {
+    text-decoration: none;
+  }
+
+  .article-card h2 a:hover,
+  .article-card h2 a:focus-visible {
+    color: var(--lime);
+    text-decoration: underline;
+  }
+
+  .article-date {
+    display: inline;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .article-card p {
+    margin: 0;
+  }
+
+  .article-card.index h2 {
+    font-size: 36px;
+    line-height: 1.4;
+  }
+
+  .index-date {
+    margin: 0;
+    position: relative;
+    top: 5.5px;
+  }
+
+  @media (max-width: 599px) {
+    .article-card.home h2 {
+      font-size: 28.2415px;
+      line-height: 39.5381px;
+    }
+
+    .article-date {
+      font-size: 14.2415px;
+      line-height: 22.7864px;
+    }
+
+    .article-card.home .article-date {
+      position: relative;
+      top: -2px;
+    }
+
+    .article-card.home p {
+      margin-top: 4.7969px;
+    }
+
+    .index-date {
+      top: 6px;
+    }
+  }
+</style>

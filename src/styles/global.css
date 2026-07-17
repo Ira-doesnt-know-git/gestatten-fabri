@@ -1,0 +1,180 @@
+:root {
+  --lime: #9dff20;
+  --black: #000;
+  --white: #fff;
+  --muted: #676767;
+  --content: 900px;
+  --article: 650px;
+  --page: 972.8px;
+  --gutter: 32px;
+  color-scheme: light;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
+    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--white);
+}
+
+body {
+  margin: 0;
+  padding-bottom: 32px;
+  min-width: 320px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 18px;
+  font-weight: 250;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  transform: translateY(-120%);
+  padding: 0.5rem 0.75rem;
+  background: var(--black);
+  color: var(--white);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.back-to-top {
+  position: fixed;
+  z-index: 20;
+  left: 16px;
+  bottom: 18px;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--white);
+  font-size: 21px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.shell {
+  width: min(100% - (2 * var(--gutter)), var(--content));
+  margin-inline: auto;
+}
+
+.page-shell {
+  width: min(100% - (2 * var(--gutter)), var(--page));
+  margin-inline: auto;
+}
+
+.article-shell {
+  width: min(100% - (2 * var(--gutter)), var(--article));
+  margin-inline: auto;
+}
+
+.page-title {
+  margin: 0 0 1.15rem;
+  font-size: 43.2px;
+  font-weight: 150;
+  line-height: 1.4;
+}
+
+.static-page {
+  min-height: 420px;
+  padding: 93px 0 35px;
+}
+
+.static-page h2 {
+  margin: 31px 0 0;
+  font-size: 36px;
+  font-weight: 150;
+  line-height: 1.4;
+}
+
+.static-page h2:first-child {
+  margin-top: 0;
+  font-size: 43.2px;
+}
+
+.static-page p {
+  margin: 8px 0 0;
+}
+
+.static-page h2 + p {
+  margin-top: 8px;
+}
+
+.static-page h2:first-child + p {
+  margin-top: 32px;
+}
+
+.placeholder-note {
+  margin-top: 2rem !important;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--lime);
+  background: #f5f5f5;
+  font-weight: 400;
+}
+
+@media (max-width: 599px) {
+  :root {
+    --gutter: 24px;
+  }
+
+  body {
+    padding-bottom: 24px;
+    font-size: 16.2415px;
+    line-height: 25.9864px;
+  }
+
+  .page-shell {
+    width: 273.59375px;
+    max-width: calc(100% - 116.40625px);
+  }
+
+  .static-page {
+    padding: 58px 0 35px;
+  }
+
+  .page-title,
+  .page-title {
+    font-size: 36px;
+  }
+
+  .static-page h2:first-child {
+    font-size: 27.7238px;
+    line-height: 38.8133px;
+  }
+
+  .static-page h2 {
+    margin-top: 31px;
+    font-size: 36px;
+    line-height: 1.4;
+  }
+}

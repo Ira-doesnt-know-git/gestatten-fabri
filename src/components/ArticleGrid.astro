@@ -1,0 +1,42 @@
+---
+import ArticleCard from "./ArticleCard.astro";
+import type { Article } from "../lib/articles";
+
+interface Props {
+  articles: Article[];
+  variant?: "home" | "index";
+}
+
+const { articles, variant = "home" } = Astro.props;
+---
+
+<div class:list={["article-grid", variant]}>
+  {articles.map((article) => <ArticleCard article={article} variant={variant} />)}
+</div>
+
+<style>
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 72px;
+    row-gap: 72px;
+  }
+
+  .article-grid.index {
+    gap: 43.5712px;
+  }
+
+  @media (max-width: 599px) {
+    .article-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .article-grid.home {
+      gap: 40px;
+    }
+
+    .article-grid.index {
+      gap: 28.8px;
+    }
+  }
+</style>

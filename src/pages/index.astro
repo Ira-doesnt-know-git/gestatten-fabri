@@ -1,0 +1,124 @@
+---
+import { getCollection } from "astro:content";
+import ArticleGrid from "../components/ArticleGrid.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { byNewest } from "../lib/articles";
+
+const articles = (await getCollection("articles", ({ data }) => !data.draft)).sort(byNewest);
+---
+
+<BaseLayout backToTop>
+  <section class="hero" aria-label="Einführung">
+    <img class="hero-image" src="/Header.png" alt="" width="1024" height="507" />
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p><em>Struktur &amp; Story.</em> Moin, ich bin Blanche. Ich ordne Komplexität und gebe Geschichten Form. Als Autorin baue ich Serienwelten, die dort wehtun dürfen, wo es wichtig ist. Ich verbinde dramaturgisches Handwerk mit Produktionslogik und dem Blick für das große Ganze.</p>
+      <p>Meine Projekte sind passwortgeschützt. Schreib mir kurz für den Zugang: hutab[at]gestatten-fabri.de.</p>
+      <a class="hero-button" href="/studio/">Zum Studio</a>
+    </div>
+  </section>
+
+  <main id="main-content" class="home-main shell">
+    <h1 class="visually-hidden">Gestatten: Fabri</h1>
+    <ArticleGrid articles={articles} />
+  </main>
+</BaseLayout>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .hero {
+    position: relative;
+    display: flex;
+    height: 430px;
+    align-items: center;
+    margin-top: 0;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  .hero-image,
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-image {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-shade {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: min(100% - 64px, 900px);
+    margin-inline: auto;
+  }
+
+  .hero-content p {
+    margin: 0;
+    font-size: 28.8px;
+    font-weight: 250;
+    line-height: 1.6;
+  }
+
+  .hero-button {
+    display: inline-block;
+    margin-top: 14px;
+    border: 2px solid #fff;
+    padding: 12.006px 23.94px;
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+  }
+
+  .home-main {
+    margin-top: 72px;
+    margin-bottom: 128px;
+  }
+
+  @media (max-width: 599px) {
+    .hero {
+      height: 474.421875px;
+    }
+
+    .hero-image {
+      object-position: 57% center;
+    }
+
+    .hero-content {
+      width: 309.53125px;
+      max-width: calc(100% - 80.46875px);
+    }
+
+    .hero-content p {
+      font-size: 19.5988px;
+      line-height: 31.3581px;
+    }
+
+    .hero-button {
+      margin-top: 14px;
+      padding: 10.8331px 21.6012px;
+      font-size: 16.2415px;
+      line-height: 25.9864px;
+    }
+
+    .home-main {
+      margin-top: 40px;
+      margin-bottom: 80px;
+    }
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Seite nicht gefunden" description="Diese Seite konnte nicht gefunden werden.">
+  <main id="main-content" class="not-found page-shell">
+    <h1>404</h1>
+    <p>Diese Seite konnte nicht gefunden werden.</p>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 344px;
+    padding: 37px 0 96px;
+  }
+
+  .not-found h1 {
+    margin: 0;
+    font-size: 58px;
+    font-weight: 250;
+    line-height: 1.2;
+  }
+
+  .not-found p {
+    margin: 8px 0 0;
+  }
+
+  @media (max-width: 599px) {
+    .not-found {
+      min-height: 292px;
+      padding-top: 40px;
+    }
+  }
+</style>

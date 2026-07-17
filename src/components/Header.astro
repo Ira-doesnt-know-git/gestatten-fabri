@@ -1,0 +1,247 @@
+---
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const links = [
+  { href: "/", label: "Gestatten:Fabri", match: (path: string) => path === "/" },
+  { href: "/about/", label: "About", match: (path: string) => path.startsWith("/about") },
+  {
+    href: "/artikel/",
+    label: "Artikel",
+    match: (path: string) =>
+      path.startsWith("/artikel") || path.startsWith("/category") || path.startsWith("/tag"),
+  },
+  { href: "/studio/", label: "Studio", match: (path: string) => path.startsWith("/studio") },
+];
+
+const quote = "„Jede Geschichte hat einen Anfang, eine Mitte und ein Ende, aber nicht unbedingt in dieser Reihenfolge.“";
+---
+
+<header class="site-header">
+  <nav class="desktop-nav" aria-label="Menü">
+    {links.map((link) => (
+      <a class="nav-block" href={link.href} aria-current={link.match(currentPath) ? "page" : undefined}>
+        <strong>{link.label}</strong>
+      </a>
+    ))}
+    <div class="nav-quote">
+      {quote} <strong>Jean-Luc Godard</strong>
+    </div>
+  </nav>
+
+  <div class="mobile-nav">
+    <button class="menu-open" type="button" aria-label="Menü öffnen" aria-controls="mobile-menu">
+      <img src="/icons/menu.svg" alt="" width="24" height="24" />
+    </button>
+    <dialog id="mobile-menu" class="menu-dialog" aria-label="Menü">
+      <button class="menu-close" type="button" aria-label="Menü schließen">
+        <img src="/icons/close.svg" alt="" width="24" height="24" />
+      </button>
+      <div class="mobile-menu-links">
+        {links.map((link) => (
+          <a class:list={["nav-block", { active: link.match(currentPath) }]} href={link.href} aria-current={link.match(currentPath) ? "page" : undefined}>
+            <strong>{link.label}</strong>
+          </a>
+        ))}
+      </div>
+      <p class="mobile-quote">{quote} <strong>Jean-Luc Godard</strong></p>
+    </dialog>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>("#mobile-menu");
+  const openButton = document.querySelector<HTMLButtonElement>(".menu-open");
+  const closeButton = document.querySelector<HTMLButtonElement>(".menu-close");
+
+  openButton?.addEventListener("click", () => menu?.showModal());
+  closeButton?.addEventListener("click", () => menu?.close());
+  menu?.addEventListener("click", (event) => {
+    if (event.target === menu) menu.close();
+  });
+</script>
+
+<style>
+  .site-header {
+    height: 148px;
+    padding-top: 40px;
+    background: #fff;
+  }
+
+  .desktop-nav {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .nav-block {
+    display: inline-block;
+    flex: none;
+    padding: 12.672px 23.328px;
+    background: var(--lime);
+    color: #000;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-block:hover,
+  .nav-block:focus-visible {
+    background: #000;
+    color: #fff;
+  }
+
+  .nav-quote,
+  .mobile-quote {
+    font-weight: 250;
+  }
+
+  .nav-quote strong,
+  .mobile-quote strong {
+    font-weight: 500;
+  }
+
+  .nav-block strong {
+    font-weight: 500;
+  }
+
+  .desktop-nav .nav-block strong {
+    font-size: 16px;
+  }
+
+  .desktop-nav .nav-block:first-of-type {
+    margin-right: 8px;
+  }
+
+  .nav-quote {
+    flex: 0 0 758.359px;
+    border: 2px solid #fff;
+    padding: 8.5376px 17.024px;
+    font-size: 12.8px;
+    line-height: 1.6;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .mobile-nav {
+    display: none;
+  }
+
+  @media (min-width: 600px) and (max-width: 1231px) {
+    .site-header {
+      height: 217px;
+      padding-top: 64px;
+    }
+
+    .desktop-nav {
+      display: flex;
+      height: auto;
+      flex-wrap: wrap;
+      align-items: start;
+      column-gap: 8px;
+      row-gap: 32px;
+    }
+
+    .nav-quote {
+      flex: 0 0 100%;
+      width: 100%;
+      min-width: 0;
+      font-size: clamp(9.8px, 1.7vw, 12.8px);
+    }
+  }
+
+  @media (max-width: 599px) {
+    .site-header {
+      height: 64px;
+      padding: 0;
+    }
+
+    .desktop-nav {
+      display: none;
+    }
+
+    .mobile-nav {
+      display: flex;
+      height: 64px;
+      align-items: center;
+    }
+
+    .menu-open,
+    .menu-close {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .menu-open {
+      margin-left: -8px;
+      transform: translateY(12px);
+    }
+
+    .menu-dialog {
+      width: 100vw;
+      max-width: none;
+      height: 100vh;
+      max-height: none;
+      margin: 0;
+      border: 0;
+      padding: 0;
+      background: #fff;
+    }
+
+    .menu-dialog::backdrop {
+      background: #fff;
+    }
+
+    .menu-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      outline: none;
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 79px 0 0 23px;
+    }
+
+    .mobile-menu-links .nav-block:first-child {
+      margin-bottom: 10px;
+    }
+
+    .mobile-menu-links .nav-block {
+      padding: 10.7px 22px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .mobile-menu-links .nav-block.active {
+      border: 1px solid var(--lime);
+      background: #000;
+      color: #fff;
+    }
+
+    .mobile-quote {
+      width: 310px;
+      margin: 19px auto 0;
+      font-size: 12.8px;
+      line-height: 1.6;
+      text-align: center;
+    }
+  }
+</style>
