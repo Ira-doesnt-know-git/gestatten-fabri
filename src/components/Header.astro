@@ -68,7 +68,11 @@ const quote = "„Jede Geschichte hat einen Anfang, eine Mitte und ein Ende, abe
 
 <style>
   .site-header {
-    height: 148px;
+    position: sticky;
+    z-index: 1000;
+    top: -32px;
+    height: 132px;
+    margin-bottom: 16px;
     padding-top: 40px;
     background: #fff;
   }
@@ -135,9 +139,17 @@ const quote = "„Jede Geschichte hat einen Anfang, eine Mitte und ein Ende, abe
     display: none;
   }
 
+  @media (min-width: 1232px) {
+    .desktop-nav {
+      transform: translateY(-8px);
+    }
+  }
+
   @media (min-width: 600px) and (max-width: 1231px) {
     .site-header {
+      top: -64px;
       height: 217px;
+      margin-bottom: 0;
       padding-top: 64px;
     }
 
@@ -160,7 +172,9 @@ const quote = "„Jede Geschichte hat einen Anfang, eine Mitte und ein Ende, abe
 
   @media (max-width: 599px) {
     .site-header {
+      top: -24px;
       height: 64px;
+      margin-bottom: 0;
       padding: 0;
     }
 
