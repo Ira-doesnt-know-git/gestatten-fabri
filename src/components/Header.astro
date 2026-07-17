@@ -1,9 +1,11 @@
 ---
+import { withBase, withoutBase } from "../lib/urls";
+
 interface Props {
   currentPath: string;
 }
 
-const { currentPath } = Astro.props;
+const currentPath = withoutBase(Astro.props.currentPath);
 
 const links = [
   { href: "/", label: "Gestatten:Fabri", match: (path: string) => path === "/" },
@@ -23,7 +25,7 @@ const quote = "„Jede Geschichte hat einen Anfang, eine Mitte und ein Ende, abe
 <header class="site-header">
   <nav class="desktop-nav" aria-label="Menü">
     {links.map((link) => (
-      <a class="nav-block" href={link.href} aria-current={link.match(currentPath) ? "page" : undefined}>
+      <a class="nav-block" href={withBase(link.href)} aria-current={link.match(currentPath) ? "page" : undefined}>
         <strong>{link.label}</strong>
       </a>
     ))}
@@ -34,15 +36,15 @@ const quote = "„Jede Geschichte hat einen Anfang, eine Mitte und ein Ende, abe
 
   <div class="mobile-nav">
     <button class="menu-open" type="button" aria-label="Menü öffnen" aria-controls="mobile-menu">
-      <img src="/icons/menu.svg" alt="" width="24" height="24" />
+      <img src={withBase("/icons/menu.svg")} alt="" width="24" height="24" />
     </button>
     <dialog id="mobile-menu" class="menu-dialog" aria-label="Menü">
       <button class="menu-close" type="button" aria-label="Menü schließen">
-        <img src="/icons/close.svg" alt="" width="24" height="24" />
+        <img src={withBase("/icons/close.svg")} alt="" width="24" height="24" />
       </button>
       <div class="mobile-menu-links">
         {links.map((link) => (
-          <a class:list={["nav-block", { active: link.match(currentPath) }]} href={link.href} aria-current={link.match(currentPath) ? "page" : undefined}>
+          <a class:list={["nav-block", { active: link.match(currentPath) }]} href={withBase(link.href)} aria-current={link.match(currentPath) ? "page" : undefined}>
             <strong>{link.label}</strong>
           </a>
         ))}

@@ -10,6 +10,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET }}
+
 concurrency:
   group: pages
   cancel-in-progress: false

@@ -1,6 +1,7 @@
 ---
 import type { Article } from "../lib/articles";
 import { formatDate } from "../lib/articles";
+import { withBase } from "../lib/urls";
 
 interface Props {
   article: Article;
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { article, variant = "home" } = Astro.props;
-const href = `/${article.data.slug}/`;
+const href = withBase(`/${article.data.slug}/`);
 ---
 
 <article class:list={["article-card", variant]}>

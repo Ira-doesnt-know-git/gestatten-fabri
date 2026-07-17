@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { withBase } from "../lib/urls";
 import "../styles/global.css";
 
 interface Props {
@@ -19,7 +20,8 @@ const {
 
 const pageTitle = title ? `${title} – Gestatten: Fabri` : "Gestatten: Fabri";
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const socialImage = new URL(image, Astro.site);
+const socialImage = new URL(withBase(image), Astro.site);
+const rssUrl = withBase("/rss.xml");
 ---
 
 <!doctype html>
@@ -30,7 +32,7 @@ const socialImage = new URL(image, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" type="application/rss+xml" title="Gestatten: Fabri" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Gestatten: Fabri" href={rssUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content="Gestatten: Fabri" />

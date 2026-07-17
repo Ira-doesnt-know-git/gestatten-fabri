@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../lib/urls";
 ---
 
 <BaseLayout title="About" description="Über Blanche Fabri, Struktur, Serie und Medien." backToTop>
@@ -22,6 +23,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <p>Geboren im charmanten Wien, habe ich das Laufen in Kapstadt gelernt und lebe nun in Hamburg.</p>
 
     <h2>Kontakt</h2>
-    <p>Aktuelle Exposés und Drehbücher stelle ich Redaktionen und Produktionen gerne in meinem geschützten <a href="/studio/">Studio</a> zur Verfügung – das Passwort gibt es auf Anfrage per E-Mail hutab[at]gestatten-fabri.de.</p>
+    <p>Aktuelle Exposés und Drehbücher stelle ich Redaktionen und Produktionen gerne in meinem geschützten <a href={withBase("/studio/")}>Studio</a> zur Verfügung – das Passwort gibt es auf Anfrage per E-Mail hutab[at]gestatten-fabri.de.</p>
   </main>
 </BaseLayout>

@@ -3,18 +3,19 @@ import { getCollection } from "astro:content";
 import ArticleGrid from "../components/ArticleGrid.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { byNewest } from "../lib/articles";
+import { withBase } from "../lib/urls";
 
 const articles = (await getCollection("articles", ({ data }) => !data.draft)).sort(byNewest);
 ---
 
 <BaseLayout backToTop>
   <section class="hero" aria-label="Einführung">
-    <img class="hero-image" src="/Header.png" alt="" width="1024" height="507" />
+    <img class="hero-image" src={withBase("/Header.png")} alt="" width="1024" height="507" />
     <div class="hero-shade"></div>
     <div class="hero-content">
       <p><em>Struktur &amp; Story.</em> Moin, ich bin Blanche. Ich ordne Komplexität und gebe Geschichten Form. Als Autorin baue ich Serienwelten, die dort wehtun dürfen, wo es wichtig ist. Ich verbinde dramaturgisches Handwerk mit Produktionslogik und dem Blick für das große Ganze.</p>
       <p>Meine Projekte sind passwortgeschützt. Schreib mir kurz für den Zugang: hutab[at]gestatten-fabri.de.</p>
-      <a class="hero-button" href="/studio/">Zum Studio</a>
+      <a class="hero-button" href={withBase("/studio/")}>Zum Studio</a>
     </div>
   </section>
 

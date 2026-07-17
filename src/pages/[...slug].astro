@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { formatDate, slugify } from "../lib/articles";
+import { withBase } from "../lib/urls";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles", ({ data }) => !data.draft);
@@ -34,7 +35,7 @@ const { Content } = await render(article);
           <p>Beitrag veröffentlicht</p>
           <time datetime={article.data.publishedAt.toISOString()}>{formatDate(article.data.publishedAt)}</time>
           <p>in</p>
-          <a href="/category/beitraege/">Beiträge</a>
+          <a href={withBase("/category/beitraege/")}>Beiträge</a>
           <span class="meta-break" aria-hidden="true"></span>
           <p>von</p>
           <p>{article.data.author}</p>
@@ -46,7 +47,7 @@ const { Content } = await render(article);
             <div>
               {article.data.tags.map((tag, index) => (
                 <>
-                  <a href={`/tag/${slugify(tag)}/`}>{tag}</a>{index < article.data.tags.length - 1 ? ", " : ""}
+                  <a href={withBase(`/tag/${slugify(tag)}/`)}>{tag}</a>{index < article.data.tags.length - 1 ? ", " : ""}
                 </>
               ))}
             </div>

@@ -1,19 +1,23 @@
+---
+import { withBase } from "../lib/urls";
+---
+
 <footer class="site-footer">
-  <a href="/impressum/">Kontakt &amp; Impressum</a>
+  <a href={withBase("/impressum/")}>Kontakt &amp; Impressum</a>
   <ul class="social-links" aria-label="Social Media">
     <li>
       <a href="https://www.linkedin.com/in/blanchefabri/" rel="me noopener" aria-label="LinkedIn">
-        <img src="/icons/linkedin.svg" alt="" width="24" height="24" />
+        <img src={withBase("/icons/linkedin.svg")} alt="" width="24" height="24" />
       </a>
     </li>
     <li>
       <a href="https://www.instagram.com/blanchefabri/" rel="me noopener" aria-label="Instagram">
-        <img src="/icons/instagram.svg" alt="" width="24" height="24" />
+        <img src={withBase("/icons/instagram.svg")} alt="" width="24" height="24" />
       </a>
     </li>
     <li>
       <a href="https://www.threads.net/@blanchefabri" rel="me noopener" aria-label="Threads">
-        <img src="/icons/threads.svg" alt="" width="24" height="24" />
+        <img src={withBase("/icons/threads.svg")} alt="" width="24" height="24" />
       </a>
     </li>
   </ul>
