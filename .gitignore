@@ -9,3 +9,6 @@ design-qa.md
 .env
 .env.*
 !.env.example
+
+# Decrypted protected-page source. Commit only its encrypted counterpart.
+src/pages/heiratet-joeran.astro

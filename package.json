@@ -7,7 +7,12 @@
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check"
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "protected:init-local": "node scripts/protected-content.mjs init-local",
+    "protected:encrypt-source": "node --env-file-if-exists=.env.protected.local scripts/protected-content.mjs encrypt-source",
+    "protected:decrypt-source": "node --env-file-if-exists=.env.protected.local scripts/protected-content.mjs decrypt-source",
+    "protected:validate": "node scripts/protected-content.mjs validate",
+    "protected:encrypt-output": "node --env-file-if-exists=.env.protected.local scripts/protect-output.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "4.0.19",
@@ -16,6 +21,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "staticrypt": "3.5.4",
     "typescript": "6.0.3"
   }
 }
