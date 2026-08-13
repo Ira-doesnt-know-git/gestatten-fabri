@@ -56,6 +56,31 @@ Local development defaults to the production-style root path. To run locally wit
 DEPLOY_TARGET=github-preview npm run dev
 ```
 
+### Protected wedding page
+
+The source for `/heiratet-joeran/` is encrypted before it is committed. GitHub Actions decrypts it only inside the temporary build runner, builds the site, then encrypts that page's generated HTML before uploading the Pages artifact. The photographs remain public.
+
+Configure these repository secrets under **Settings → Secrets and variables → Actions → Secrets** before deploying:
+
+- `PROTECTED_SOURCE_KEY`: the value with the same name from `.env.protected.local`
+- `STATICRYPT_PASSWORD`: the password visitors use to open the page
+
+The ignored local file `.env.protected.local` is the only local copy of those values. Keep a backup outside the repository; losing `PROTECTED_SOURCE_KEY` means the committed source cannot be decrypted.
+
+To edit the page locally:
+
+```sh
+npm run protected:decrypt-source
+# edit src/pages/heiratet-joeran.astro
+npm run protected:encrypt-source
+```
+
+Commit `protected/heiratet-joeran.astro.enc`, never `src/pages/heiratet-joeran.astro`. The plaintext source is explicitly ignored by Git.
+
+The Astro development server renders the decrypted local source directly. The visitor password screen is applied only to the built HTML by `npm run protected:encrypt-output`, so do not expose the development server publicly.
+
+For a fresh checkout, create `.env.protected.local` with the two secret values, then run `npm run protected:decrypt-source` before starting Astro. The normal pull-request checks intentionally build without decrypting the page because GitHub does not expose repository secrets to untrusted PR workflows.
+
 When adding internal links or files from `public/` in Astro components, pass their root-relative path through `withBase()` from `src/lib/urls.ts`.
 
 ### Switching to the custom domain

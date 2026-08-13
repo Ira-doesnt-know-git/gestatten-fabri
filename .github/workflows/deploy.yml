@@ -23,8 +23,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Install, build, and upload
-        uses: withastro/action@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Decrypt protected page source
+        run: npm run protected:decrypt-source
+        env:
+          PROTECTED_SOURCE_KEY: ${{ secrets.PROTECTED_SOURCE_KEY }}
+
+      - name: Build site
+        run: npm run build
+
+      - name: Encrypt protected page output
+        run: npm run protected:encrypt-output
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
 
   deploy:
     environment:
